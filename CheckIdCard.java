@@ -28,28 +28,25 @@ public class CheckIdCard {
 			//判断输入位数是否正确
 			if (idNo.length() == 18) {
 				//计算各个为乘积之和
-				//第一步：将string转化为char[]类型
-				char[] tmp = idNo.toCharArray();
-				//创建一个长度和idNo长度相同的int[]数组
-			    int[] cardidArray = new int[tmp.length-1];
-			    //循环将char类型存入int[],完成类型转换最终为int类型
-			    int i=0;
-			    for(i=0;i<tmp.length-1;i++){
-			        cardidArray[i] = Integer.parseInt(tmp[i]+"");
+				//第一步：将string转化为int[]类型
+				//新建int[]数组,因为计算前十七位数字，所以长度为str.length()-1
+				int[] cardidArray = new int[idNo.length()-1];
+			    for(int i=0;i<cardidArray.length;i++){
+			        cardidArray[i] = Integer.parseInt(idNo.charAt(i)+"");
 			    }
 			    int sum = 0;
 			    for (int j = 0; j < xishu.length; j++) {
 					sum = sum + cardidArray[j] * xishu[j];
 				}
-			   
 				//取余
 				int a = sum % 11;
 				//判断第十八位对应的数和a是否一致，一致则正确，否则错误,通过as数组和last数组下标确认
 				//确认最后一位的下标
 				int lastIndex = 0;
 				int asIndex = 0;
+				char endNo = idNo.charAt(idNo.length()-1);
 				for (int j = 0; j < last.length; j++) {
-					if (last[j]==(tmp[tmp.length-1])) {
+					if (last[j]==endNo) {
 						lastIndex = j;
 					}
 				}
